@@ -1,0 +1,136 @@
+{% extends "dixy/master.html" %}
+
+{% block javascript %}
+<link rel="stylesheet" type="text/css" href="/media/css/jquery-ui-1.10.2.custom.css">
+<script src="http://d3js.org/d3.v3.js"></script>
+<script src="http://code.jquery.com/jquery-2.1.0.js"></script>
+<script src="/media/js/descriptions.js"></script>
+<script src="/media/js/{{data}}"></script>
+<script src="/media/js/{{metadata}}"></script>
+<script src="/media/js/FunctionalComplexes.json"></script>
+<script src="/media/js/GOAnnotation.json"></script>
+<script src="/media/js/jquery-ui-1.10.2.custom.js"></script>
+<script src="/media/js/dixy.js"></script>
+<script type='text/javascript'>
+var metadata_labels = [{% for m in metadata_labels %}"{{m}}"{% if not forloop.last %},{% endif %}{% endfor %}];
+</script>
+{% endblock %}
+{% block content %}
+<div class="tencol buttons">
+    <h3>Data selection & animations</h3>
+<p>Clicking on the buttons below will cause animated transitions between different two-way QFA comparisons. Click on any point in the graph to select it - selected points will remain highlighted between datasets.
+<p>These animations work best in Chrome or Firefox. Use the controls on the right to customise the speed of the animation, or turn it off.
+    <p>
+{% for index, label in inputs.items %}{% if index == 0 %} <button id='chart_{{index}}' class='run selected_button'> {% else %} <button id='chart_{{index}}' class='run unselected_button'>{% endif %}{{label}}</button>{% endfor %}
+</p>
+</div>
+<div class="twocol last">
+<b>Speed</b>: <select id='timing'>
+<option value=500>Quickest</option>
+<option value=1000>Quick</option>
+<option value=5000 SELECTED>Medium (default)</option>
+<option value=10000>Slow</option>
+<option value=30000>Slowest</option>
+</select>
+<b>Disable</b>: <input type='checkbox' id='disable'>
+</div>
+<div class="twelvecol last">
+    <hr />
+</div>
+<div class="threecol" style="height: 750px;">
+<h3>Colour key</h3>
+<p>The points on the scatterplot are coloured according to a number of criteria:</p>
+<p>
+<table>
+    <tr>
+        <td class="key_gene">&nbsp;</td>
+        <td>Gene (hover for gene names)</td>
+    </tr>
+    <tr>
+        <td class="key_up">&nbsp;</td>
+        <td>Significant Gene (improved fitness)</td>
+    </tr>
+    <tr>
+        <td class="key_down">&nbsp;</td>
+        <td>Significant Gene (reduced fitness)</td>
+    <tr>
+    <tr>
+        <td class="key_select">&nbsp;</td>
+        <td>Selected Gene</td>
+    <tr>
+    <tr>
+        <td class="key_select_sig">&nbsp;</td>
+        <td>Selected and Significant Gene</td>
+    <tr>
+</table>
+<hr/>
+    <h3>Keyboard shortcuts</h3>
+<p>A number of keyboard shortcuts help with navigation of the datasets and gene lists:
+<p>
+<table>
+    <tr>
+        <th>Key</th><th>Function</th>
+    </tr>
+    <tr>
+        <td>c</td><td>Clear currently selected points</td>
+    </tr>
+    <tr>
+        <td>,</td><td>Select 'previous' dataset (button to left of current dataset).</td>
+    </tr>
+    <tr>
+        <td>.</td><td>Select 'next' dataset (button to right of current dataset).</td>
+    </tr>
+    <tr>
+        <td>Up arrow</td><td>Move up through current list of Genesets</td>
+    </tr>
+    <tr>
+        <td>Down arrow</td><td>Move down through current list of Genesets</td>
+    </tr>
+    <tr>
+        <td>Shift+Click</td><td>Open gene in SGD</td>
+    </tr>
+</table>
+<hr/>
+<h3>Vector graphics</h3>
+<p>Click button to generate a saveable (.SVG) version of the current graph 
+which will appear at the foot of this page.</p>
+<input type='Submit' class='saveas' id='saveas' value='Saveable graph'>
+<hr/>
+<h3>Further customisations</h3>
+<p>
+Reverse significant points colouring: <input type='checkbox' id='reverse' onclick="move_data(current_slope1, current_slope2, true, true);"> 
+</p>
+</div>
+<div class="ninecol last" id="chart" style="height: 750px;"></div>
+
+<div class="twelvecol last instructions">
+    <h3>Search for genes</h3>
+<input type='text' id='search' class='search' style="width:100%;border: 1px solid black;">
+<p>Use the text box above to search for genes of interest. Searches will auto-complete based on gene name or systematic ORF name.
+<p>Paste in comma-separated lists to select groups of genes.
+<p>If searching by standard gene name does not return any result, please try searching by systematic ORF name instead.
+<p>If searching by systematic ORF name does not return any result, this means that the gene disruption was not present in the library screened.
+<p>
+<br/>
+</div>
+<div class="sixcol" id="buffer">
+<!--div id="hover-info" style="float: left; width: 15%; height: 350px; background-color: lightblue;"><strong>Hovered Gene Info</strong><br/><br/></div-->
+<div id="selected-info" style="height: 200px;"><strong>Selected genes</strong><br/><br/></div>
+</div>
+<div class="sixcol last genesets">
+<h3>Genesets</h3>
+<p>Select gene sets from the lists below to highlight groups of interest. Use the up and down arrows on your keyboard to cycle through the currently selected list of lists.
+<p>
+<select size='2' name='genesets' id='genesets'>
+    <option value='0' SELECTED>Functional Complexes</option>
+    <option value='1'>GO Annotation</option>
+</select>
+<select size='10' name='geneset_lists' id='geneset_lists'>
+</select>
+</div>
+<script>
+var x_files = ['{{x_files|join:"','"}}'];
+var y_files = ['{{y_files|join:"','"}}'];
+</script>
+<script src="/media/js/dixy_d3.js"></script>
+{% endblock %}

@@ -1,0 +1,131 @@
+{% extends "dixy/master.html" %}
+
+{% block javascript %}
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>
+<script src="/media/js/arbor.js"></script>
+{% endblock %}
+
+{% block content %}
+{{request}}
+<div class="twelvecol last" id="cy">
+
+</div>
+<div class="twelvecol last">
+<button id='breadthfirst_circle'>Breadthfirst Circle Layout</button>
+<button id='breadthfirst'>Breadthfirst Layout</button>
+<button id='arbor'>Force-Directed (Arbor) Layout</button>
+<button id='grid'>Grid Layout</button>
+<button id='circle'>Circle Layout</button>
+<button id='random'>Random Layout</button>
+<p>
+<button id='hide_genetic'>Hide Genetic Interactions (green)</button>
+<button id='show_genetic'>Show Genetic Interactions</button>
+<button id='hide_physical'>Hide Physical Interactions (blue)</button>
+<button id='show_physical'>Show Physical Interactions</button>
+<p><br/>
+Displaying only interactions identified by low throughput experiments.
+
+</div>
+<script>
+var genetic;
+var physical;
+$('#cy').cytoscape({
+  style: cytoscape.stylesheet()
+    .selector('node')
+      .css({
+        'content': 'data(name)',
+        'text-valign': 'center',
+        'color': 'white',
+        'text-outline-width': 2,
+		'background-color': 'data(favColor)',
+        'text-outline-color': 'data(favColor)'
+      })
+    .selector('edge')
+      .css({
+		'target-arrow-color': 'data(favColor)',
+        'target-arrow-shape': 'triangle',
+		'line-color': 'data(favColor)',
+      })
+    .selector(':selected')
+      .css({
+        'background-color': 'black',
+        'line-color': 'black',
+        'target-arrow-color': 'black',
+        'source-arrow-color': 'black'
+      })
+    .selector('.faded')
+      .css({
+        'opacity': 0.25,
+        'text-opacity': 0
+      }),
+  
+  layout: { name:'breadthfirst',
+  	circle: 'true'  
+  },
+
+  elements: {
+    nodes: [
+{% for gene in genes %}{{gene|safe}}{% endfor %}
+    ],
+    edges: [
+{% for edge in edges %}{{edge|safe}}{% endfor %}
+    ]
+  },
+
+  ready: function(){
+    window.cy = this;
+    
+    // giddy up...
+    
+    cy.elements().unselectify();
+    
+    cy.on('tap', 'node', function(e){
+      var node = e.cyTarget; 
+      var neighborhood = node.neighborhood().add(node);
+      
+      cy.elements().addClass('faded');
+      neighborhood.removeClass('faded');
+    });
+    
+    cy.on('tap', function(e){
+      if( e.cyTarget === cy ){
+        cy.elements().removeClass('faded');
+      }
+    });
+    genetic = cy.filter("edge[favColor = '#86B342']");
+    physical = cy.filter("edge[favColor = '#6FB1FC']");
+  }
+});
+jQuery('button[id=breadthfirst_circle]').click(function() {
+	cy.layout({name:'breadthfirst', circle:'true'});
+});
+jQuery('button[id=breadthfirst]').click(function() {
+	cy.layout({name:'breadthfirst'});
+});
+jQuery('button[id=arbor]').click(function() {
+	cy.layout({name:'arbor'});
+});
+jQuery('button[id=grid]').click(function() {
+	cy.layout({name:'grid'});
+});
+jQuery('button[id=circle]').click(function() {
+	cy.layout({name:'circle'});
+});
+jQuery('button[id=random]').click(function() {
+	cy.layout({name:'random'});
+});
+jQuery('button[id=hide_genetic]').click(function() {
+	genetic.remove();
+});
+jQuery('button[id=show_genetic]').click(function() {
+	genetic.restore();
+});
+jQuery('button[id=hide_physical]').click(function() {
+	physical.remove();
+});
+jQuery('button[id=show_physical]').click(function() {
+	physical.restore();
+});
+</script>
+{% endblock %}

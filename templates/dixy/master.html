@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Vizualisation of Quantitative Fitness Analysis</title>
+<link rel="stylesheet" type="text/css" href="/media/css/1140.css" />
+<link rel="stylesheet" type="text/css" href="/media/css/styles.css" />
+{% block javascript %}
+<script>
+</script>
+{% endblock %}
+</head>
+<body>
+{% block header %}
+<div width='100%' class='banner_head'>
+  <div class='row header'>
+    <div class="twocol">
+        <a href="/dixy"><img src='/media/graphics/dixy_alpha_rb.png' style="padding-left:10px"/></a>
+	</div>
+	<div class='sixcol'>
+		<ul>
+		<li><a href='/dixy' {% ifequal context 'home' %}id='active'{% endifequal %}>Understanding DIXY</a></li>
+		<li><a href='/dixy/viz' {% ifequal context 'viz' %}id='active'{% endifequal %}>Data & Plots</a></li>
+		<li><a href='http://research.ncl.ac.uk/qfa' {% ifequal context 'about' %}id='active'{% endifequal %}>About QFA</a></li>
+		<li><a href='/dixy/contact' {% ifequal context 'contact' %}id='active'{% endifequal %}>Contact</a></li>
+		</ul>
+	</div>
+	<div class='threecol'></div>
+    <div class='onecol logo last'><a href='http://bsu.ncl.ac.uk'>NCL<br/>BSU</a></div>
+  </div>
+</div>
+<div class="container">
+{% endblock %}
+	<div class="row">
+{% block sidebar %}
+{% endblock %}
+		<div class="twelvecol maincontent last">
+{% block content %}
+			<p>Default content.
+{% endblock %}
+		</div>
+</div>
+{% block footer %}
+	<div class='footer' width='100%'>
+		<ul>
+        <li><a href='/dixy'>Understanding DIXY</a></li>
+        <li><a href="/dixy/viz">Data & Plots</a></li>
+        <li><a href="http://research.ncl.ac.uk/qfa/">About</a></li>
+        <li><a href="/dixy/contact">Contact</a></li>
+		</ul>
+		<p>Copyright &copy; <a href='http://research.ncl.ac.uk/lydallab/Welcome.html'>Lydall Lab</a>, Newcastle University 2012
+		{% if year > 2012 %}
+        - {% now "Y" %}
+		{% endif %}
+		</p>
+        <p>Dixy is built using <a href='http://www.djangoproject.com'>Django</a>, 
+        <a href='http://d3js.org/'>D3.js</a> and <a href='http://jquery.com/'>Jquery</a>.</p>
+		<p>
+		Pages designed and maintained by <a href="mailto:simon_dot_cockell_at_newcastle_dot_ac_dot_uk">Simon Cockell</a>, Newcastle University <a href="http://bsu.ncl.ac.uk">Bioinformatics Support Unit</a>
+		</p>
+	</div>
+{% endblock %}
+</body>
+</html>

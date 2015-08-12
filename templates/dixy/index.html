@@ -1,0 +1,73 @@
+{% extends "dixy/master.html" %}
+{% block content %}
+<h2>Welcome</h2>
+<p>&nbsp;</p>
+<p>Dixy is a web application for producing <u>D</u>ynamic, <u>I</u>nteractive <u>XY</u> plots of data.<br/>
+<!--Dixy is built using <a href='http://www.djangoproject.com'>Django</a>, 
+<a href='http://d3js.org/'>D3.js</a> and <a href='http://jquery.com/'>Jquery</a>.-->
+To use and interact with the data, click <a href="/dixy/viz">Datasets</a> in the menu bar above.<br/>
+<!--On this page you can select the datasets that you wish to visualise.-->
+Alternatively, <a href="/dixy/test">here is an example visualisation</a> of a number of QFA datasets.</p>
+<p>&nbsp;</p>
+<h2>Background (QFA)</h2>
+<p>&nbsp;</p>
+<p>Quantitative Fitness Analysis (QFA) is an experimental and computational
+workflow for comparing fitnesses of microbial cultures grown in parallel. QFA
+can be applied to focused observations of single cultures but is most useful for
+genome-wide genetic interaction or drug screens investigating up to thousands of
+independent cultures. The central experimental method is the inoculation of
+independent, dilute liquid microbial cultures onto solid agar plates which are
+incubated and regularly photographed. Photographs from each time-point are
+analyzed, producing quantitative cell density estimates, which are used to
+construct growth curves, allowing quantitative fitness measures to be derived.
+Culture fitnesses can be compared to quantify and rank genetic interaction
+strengths or drug sensitivities. The effect on culture fitness of any treatments
+added into substrate agar (e.g. small molecules, antibiotics or nutrients) or
+applied to plates externally (e.g. UV irradiation, temperature) can be
+quantified by QFA.</p>
+&nbsp;<br/>
+<!--p><font size="-3">Text from Banks <em>et al.</em> (2012).</font></p-->
+&nbsp;<br/>
+<p>For more information about QFA, and the data presented on this site, see the
+following publications:</p>
+&nbsp;<br/>
+<ul>
+<li>
+Banks, A., Lawless, C., Lydall, D. (2012) A Quantitative Fitness Analysis Workflow. J.
+Vis. Exp. (66), e4018, doi: <a href="http://dx.doi.org/10.3791/4018">10.3791/4018</a>
+</li>
+<li>
+Addinall SG, Holstein E-M, Lawless C, Yu M, Chapman K, et al. (2011)
+Quantitative Fitness Analysis Shows That NMD Proteins and Many Other Protein
+Complexes Suppress or Enhance Distinct Telomere Cap Defects. PLoS Genet 7(4):
+e1001362. doi: <a
+href="http://dx.doi.org/10.1371/journal.pgen.1001362">10.1371/journal.pgen.1001362</a>
+</li>
+<li>
+Hsin-Yu Chang, Conor Lawless, Stephen G. Addinall, Sarah Oexle, Morgan
+Taschuk, Anil Wipat, Darren J. Wilkinson and David Lydall (2011) Genome-Wide
+Analysis to Identify Pathways Affecting Telomere-Initiated Senescence in Budding
+Yeast. G3 1(3): 197-208. doi: <a
+href='http://dx.doi.org/10.1534/g3.111.000216'>10.1534/g3.111.000216</a>
+</li>
+</ul>
+&nbsp;<br/>
+&nbsp;<br/>
+<p>An R package that implements Quantitative Fitness Analysis:</p>
+&nbsp;<br/>
+<a href='http://qfa.r-forge.r-project.org/'>qfa: the R toolbox for carrying out
+Quantitative Fitness Analysis</a><br/>
+&nbsp;<br/>
+See also:<br/>
+<a href='http://research.ncl.ac.uk/colonyzer/'>Colonyzer: automated quantification of micro-organism growth characteristics on solid agar</a>
+<p>
+<!--embed height="515" width="815"
+    autoplay="false"
+    src="http://ecsource.jove.com/CDNSource/protected/4018_Lydall_081012_F_Web.mp4"-->
+<iframe height="515" width="100%" border="0" style="overflow:scroll;" 
+    frameborder="0" marginheight="0" marginwidth="0" 
+    src="http://www.jove.com/embed/player?id=4018&amp;t=1&amp;a=1&amp;chap=1&amp;s=1">
+    <p>
+    <a title="A Quantitative Fitness Analysis Workflow" href="http://www.jove.com/video/4018/a-quantitative-fitness-analysis-workflow">A Quantitative Fitness Analysis Workflow</a></p></iframe>
+</p>
+{% endblock %}
