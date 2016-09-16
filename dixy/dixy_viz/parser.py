@@ -15,6 +15,7 @@ def main(input_list, slug, data_out, metadata_out):
             fh = open(infile, 'rU')
         data_lines = fh.read().splitlines()
         fh.close()
+        print(f)
         all_data.append(parse_data(data_lines))
         header = parse_header(data_lines)
         header['file_name'] = f
@@ -162,7 +163,22 @@ def make_json(data, headers, orfs):
             try:
                 d['gene_name'] = data[1][0][orf]
             except KeyError:
-                d['gene_name'] = data[2][0][orf]
+                try:
+                    d['gene_name'] = data[2][0][orf]
+                except KeyError:
+                    try:
+                        d['gene_name'] = data[3][0][orf]
+                    except KeyError:
+                        try:
+                            d['gene_name'] = data[4][0][orf]
+                        except KeyError:
+                            try:
+                                d['gene_name'] = data[5][0][orf]
+                            except KeyError:
+                                try:
+                                    d['gene_name'] = data[6][0][orf]
+                                except KeyError:
+                                    d['gene_name'] = data[7][0][orf]
         for i in range(0, len(headers)):
             filename = headers[i]['file_name']
             try:
@@ -205,6 +221,7 @@ def parse_data(fc):
                 pass
             else:
                 tokens = line.split('\t')
+                #print(tokens)
                 orf_name = tokens[0]
                 genes[orf_name] = tokens[1]
                 x_points[orf_name] = tokens[6]
@@ -254,10 +271,19 @@ if __name__ == '__main__':
     #'pol2-12_CONC_vs_CONT_CONC_36.txt',
     #'pol2-12_CONC_vs_pol1-1_CONC_36.txt',
     #]
-    input_list = ['cdc13-1.txt',
-    'cdc2-2 (Pol delta).txt',
-    'HU_100mM.txt',
-    'pol1-4 (Pol alpha).txt',
-    'pol2-12 (Pol epsilon).txt',
-    ]
+    #input_list = ['cdc13-1.txt',
+    #'cdc2-2 (Pol delta).txt',
+    #'HU_100mM.txt',
+    #'pol1-4 (Pol alpha).txt',
+    #'pol2-12 (Pol epsilon).txt',
+    #]
+    input_list = ['APB_QFA0142_cdc13-1_rad9D_27_SDM_rhlk_CTGNH_vs_QFA0140_cdc13-1_27_SDM_rhlk_CTGH_MDRMDP_GIS.txt',
+        'APB_QFA0142_cdc13-1_rad9D_UD_X1_SDM_rhlk_CTGNH_vs_QFA0140_cdc13-1_UD_X3_SDM_rhlk_CTGH_MDRMDP_GIS.txt',
+        'DAL_QFA0051_cdc13-1_exo1D_30_SDM_rhlk_CTGNH_vs_QFA0140_cdc13-1_27_SDM_rhlk_CTGH_MDRMDP_GIS.txt',
+        'DAL_QFA0136_stn1-13_33_SDM_rhlk_CTGNH_vs_QFA0018_lyp1_HLN_33_SDM_rhlk_CTGNH_MDRMDP_GIS.txt',
+        'DAL_QFA0139_Yku70_37_5_SDM_rhk_CTGN_vs_QFA0141_ura3_37_SDM_rhk_CTGN_MDRMDP_GIS.txt',
+        'DAL_QFA0140_cdc13-1_27_SDM_rhlk_CTGH_vs_QFA0141_ura3_27_SDM_rhk_CTGN_MDRMDP_GIS.txt',
+        'DAL_QFA0140_cdc13-1_UD_X3_SDM_rhlk_CTGH_vs_QFA0141_ura3_UD_X3_SDM_rhk_CTGN_MDRMDP_GIS.txt',
+        'MJG_QFA0131_rfa3-313_30_SDM_rhlk_CTGNH_vs_QFA0018_lyp1_HLN_30_SDM_rhlk_CTGNH_MDRMDP_GIS.txt',
+        ]
     main(input_list, sys.argv[1], sys.argv[2], sys.argv[3])

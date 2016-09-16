@@ -10,6 +10,9 @@ def get_header_only(f, source):
     elif source == 'dixy-pol':
         infile = os.path.join('/home/django/data/POL_v4/Scaled', f)
         fh = open(infile, 'rU')
+    elif source == 'dixy-telo':
+        infile = os.path.join('/home/django/data/telo', f)
+        fh = open(infile, 'rU')
     for line in fh:
         if line.startswith('###'):
             break
@@ -29,18 +32,24 @@ def get_header_only(f, source):
            ' C',
            ]
     except KeyError:
-        name_array = [header['Query screen name'],
-           'at',
-           header['Query treatment'],
-           #'°C',
-           ' C',
-           'vs',
-           header['Control screen name'],
-           'at',
-           header['Control treatment'],
-           #'°C',
-           ' C',
-           ]
+        try:
+            name_array = [header['Query screen name'],
+                'at',
+                header['Query treatment'],
+                #'°C',
+                ' C',
+                'vs',
+                header['Control screen name'],
+                'at',
+                header['Control treatment'],
+                #'°C',
+                ' C',
+                ]
+        except KeyError:
+            name_array = [header['y-axis screen name'],
+                'vs',
+                header['x-axis screen name'],
+                ]
     name = ' '.join(name_array)
     header['name'] = name
     return header

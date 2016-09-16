@@ -32,9 +32,21 @@ def get_input_list(site='dixy'):
             'pol1-4 (Pol alpha).txt',
             'pol2-12 (Pol epsilon).txt',
             ]
+    if site == 'dixy-telo':
+        input_list = ['APB_QFA0142_cdc13-1_rad9D_27_SDM_rhlk_CTGNH_vs_QFA0140_cdc13-1_27_SDM_rhlk_CTGH_MDRMDP_GIS.txt',
+        'APB_QFA0142_cdc13-1_rad9D_UD_X1_SDM_rhlk_CTGNH_vs_QFA0140_cdc13-1_UD_X3_SDM_rhlk_CTGH_MDRMDP_GIS.txt',
+        'DAL_QFA0051_cdc13-1_exo1D_30_SDM_rhlk_CTGNH_vs_QFA0140_cdc13-1_27_SDM_rhlk_CTGH_MDRMDP_GIS.txt',
+        'DAL_QFA0136_stn1-13_33_SDM_rhlk_CTGNH_vs_QFA0018_lyp1_HLN_33_SDM_rhlk_CTGNH_MDRMDP_GIS.txt',
+        'DAL_QFA0139_Yku70_37_5_SDM_rhk_CTGN_vs_QFA0141_ura3_37_SDM_rhk_CTGN_MDRMDP_GIS.txt',
+        'DAL_QFA0140_cdc13-1_27_SDM_rhlk_CTGH_vs_QFA0141_ura3_27_SDM_rhk_CTGN_MDRMDP_GIS.txt',
+        'DAL_QFA0140_cdc13-1_UD_X3_SDM_rhlk_CTGH_vs_QFA0141_ura3_UD_X3_SDM_rhk_CTGN_MDRMDP_GIS.txt',
+        'MJG_QFA0131_rfa3-313_30_SDM_rhlk_CTGNH_vs_QFA0018_lyp1_HLN_30_SDM_rhlk_CTGNH_MDRMDP_GIS.txt',
+        ]
     return input_list
 
 def get_url_stem(path):
+    if path.startswith('/dixy-telo'):
+        return 'dixy-telo'
     if path.startswith('/dixy-private'):
         return 'dixy-private'
     if path.startswith('/dixy-pol'):
