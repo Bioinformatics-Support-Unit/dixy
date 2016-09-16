@@ -114,7 +114,8 @@ class QFAParser:
         for k in metadata.keys():
             newk=k.replace("x-axis","Control")
             newk=newk.replace("y-axis","Query")
-            metadata[newk]=metadata.pop(k)
+            #metadata[newk]=metadata.pop(k)
+            metadata[newk]=metadata[k]
         return(metadata)          
         
     def parse_header(self, fc):
