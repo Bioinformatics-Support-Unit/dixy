@@ -116,7 +116,14 @@ class QFAParser:
             newk=newk.replace("y-axis","Query")
             #metadata[newk]=metadata.pop(k)
             metadata[newk]=metadata[k]
-        return(metadata)          
+        # Reading parser.py, it seems that some variables need to be in current format (x-axis & y-axis instead of Control and Query)
+        expts=["Control","Query"]
+        axs=["x-axis","y-axis"]
+        vbls=["background","screen name"]
+        for expt,ax in zip(expts,axs):
+            for vbl in vbls:
+                if expt+" "+vbl in metadata.keys(): metadata[ax+" "+vbl]=metadata[expt+" "+vbl]
+        return(metadata)        
         
     def parse_header(self, fc):
         """Parse out significant information from QFA file header"""
