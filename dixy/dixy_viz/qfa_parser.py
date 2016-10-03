@@ -117,7 +117,11 @@ class QFAParser:
             metadata[newk]=metadata[k]
             newk=newk.replace("Control","x-axis")
             newk=newk.replace("Query","y-axis")
-            metadata[newk]=metadata[k]            
+            metadata[newk]=metadata[k]
+        if "x-axis background" not in metadata.keys():
+            metadata["x-axis background"]=metadata["x-axis screen name"]
+        if "y-axis background" not in metadata.keys():
+            metadata["y-axis background"]=metadata["y-axis screen name"]
         return(metadata)        
         
     def parse_header(self, fc):
@@ -230,11 +234,12 @@ if __name__ == '__main__':
     import pprint
     testdir="../../test_data"
     fnames=os.listdir(testdir)
-    expected=["Control treatment","Control medium","Query treatment","Query medium"]
+    expected=["Control treatment","Control medium","Query treatment","Query medium","x-axis treatment","x-axis medium","y-axis treatment","y-axis medium","x-axis background","x-axis screen name","y-axis background","y-axis screen name"]
     for f in fnames:
         print(f)
         qfa=QFAParser(os.path.join(testdir,f),fromURL=False)
-        for exp in expected:
-            assert exp in qfa.header.keys()
         pprint.pprint(qfa.header)
+        for exp in expected:
+            assert exp in qfa.header.keys(), exp
+        
     
